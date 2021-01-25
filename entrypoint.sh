@@ -5,7 +5,7 @@
 
 case "$1" in
   embedded)
-    airflow db init 
+    airflow db init
     airflow users create -u admin -p admin -r Admin -e admin@gmail.com -f Admin -l User
     airflow scheduler &
     exec airflow webserver
@@ -18,5 +18,5 @@ case "$1" in
    ;;
    *)
     exec "$@"
-   ;; 
+   ;;
 esac
