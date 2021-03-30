@@ -1,10 +1,12 @@
 FROM apache/airflow:2.0.0-python3.8
 USER root
 RUN mkdir -p /opt/app/
-COPY entrypoint.sh /opt/app/entrypoint.sh
-COPY airflow.cfg /opt/airflow/airflow.cfg
-COPY airflow_local_settings.py /opt/airflow/airflow_local_settings.py
+COPY --chown=airflow:airflow entrypoint.sh /opt/app/entrypoint.sh
+COPY --chown=airflow:airflow airflow.cfg /opt/airflow/airflow.cfg
+COPY --chown=airflow:airflow webserver_config.py /opt/airflow/webserver_config.py
+COPY --chown=airflow:airflow airflow_local_settings.py /opt/airflow/airflow_local_settings.py
 RUN chmod a+x /opt/app/entrypoint.sh && chown -R airflow /opt/app
+
 USER airflow
 RUN /usr/local/bin/python -m pip install --upgrade pip && \
     pip3 install "apache-airflow[jdbc]" && \
