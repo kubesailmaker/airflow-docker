@@ -1,6 +1,6 @@
 FROM apache/airflow:2.0.0-python3.8
 USER root
-RUN mkdir -p /opt/app/
+RUN mkdir -p /opt/app/ && mkdir -p /opt/work
 COPY --chown=airflow:airflow entrypoint.sh /opt/app/entrypoint.sh
 COPY --chown=airflow:airflow airflow.cfg /opt/airflow/airflow.cfg
 COPY --chown=airflow:airflow webserver_config.py /opt/airflow/webserver_config.py
