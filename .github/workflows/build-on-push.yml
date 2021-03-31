@@ -21,7 +21,8 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: kubesailmaker/airflow:2.0.0-python3.8-b2
+          tags: kubesailmaker/airflow:2.0.0-python3.8-b3
+
 
 
 
