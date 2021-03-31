@@ -1,12 +1,13 @@
 FROM apache/airflow:2.0.0-python3.8
 USER root
-RUN mkdir -p /opt/app/ && mkdir -p /opt/work
+RUN mkdir -p /opt/app
+RUN mv /opt/airflow /opt/airflow-template
 COPY --chown=airflow:airflow entrypoint.sh /opt/app/entrypoint.sh
-COPY --chown=airflow:airflow airflow.cfg /opt/airflow/airflow.cfg
-COPY --chown=airflow:airflow webserver_config.py /opt/airflow/webserver_config.py
-COPY --chown=airflow:airflow airflow_local_settings.py /opt/airflow/airflow_local_settings.py
-VOLUME [ "/opt/work" ]
-RUN chmod a+x /opt/app/entrypoint.sh && chown -R airflow /opt/app /opt/work
+COPY --chown=airflow:airflow airflow.cfg /opt/airflow-template/airflow.cfg
+COPY --chown=airflow:airflow webserver_config.py /opt/airflow-template/webserver_config.py
+COPY --chown=airflow:airflow airflow_local_settings.py /opt/airflow-template/airflow_local_settings.py
+VOLUME [ "/opt/airflow" ]
+RUN chmod a+x /opt/app/entrypoint.sh && chown -R airflow /opt/app /opt/airflow
 
 USER airflow
 RUN /usr/local/bin/python -m pip install --upgrade pip && \

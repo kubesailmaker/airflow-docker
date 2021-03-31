@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-: "${AIRFLOW_HOME:="/usr/local/airflow"}"
+set -e
+
+: "${AIRFLOW_HOME:="/opt/airflow"}"
 : "${AIRFLOW__CORE__EXECUTOR:=${EXECUTOR:-Sequential}Executor}"
+if [[ ! -f /opt/airflow/airflow.cfg ]];
+then
+  cp -r /opt/airflow-template/* /opt/airflow
+fi;
 
 case "$1" in
   embedded)
@@ -20,3 +26,4 @@ case "$1" in
     exec "$@"
    ;;
 esac
+
