@@ -5,7 +5,8 @@ COPY --chown=airflow:airflow entrypoint.sh /opt/app/entrypoint.sh
 COPY --chown=airflow:airflow airflow.cfg /opt/airflow/airflow.cfg
 COPY --chown=airflow:airflow webserver_config.py /opt/airflow/webserver_config.py
 COPY --chown=airflow:airflow airflow_local_settings.py /opt/airflow/airflow_local_settings.py
-RUN chmod a+x /opt/app/entrypoint.sh && chown -R airflow /opt/app
+VOLUME [ "/opt/work" ]
+RUN chmod a+x /opt/app/entrypoint.sh && chown -R airflow /opt/app /opt/work
 
 USER airflow
 RUN /usr/local/bin/python -m pip install --upgrade pip && \
@@ -15,4 +16,5 @@ RUN /usr/local/bin/python -m pip install --upgrade pip && \
     pip3 install "apache-airflow[postgres]" && \
     pip3 install "apache-airflow[kubernetes]" && \
     pip3 install oauth2client authlib
+WORKDIR "/opt/work"
 ENTRYPOINT ["/opt/app/entrypoint.sh"]
