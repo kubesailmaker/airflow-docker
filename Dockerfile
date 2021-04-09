@@ -1,4 +1,4 @@
-FROM apache/airflow:2.0.0-python3.8
+FROM apache/airflow:2.0.1-python3.8
 USER root
 RUN mkdir -p /opt/app
 RUN mv /opt/airflow /opt/airflow-template
